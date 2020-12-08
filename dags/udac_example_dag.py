@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+
 import os
 from airflow import DAG
 from airflow.operators.dummy_operator import DummyOperator
@@ -11,7 +12,7 @@ from helpers import SqlQueries
 
 default_args = {
     'owner': 'udacity',
-    'start_date': datetime(2019, 1, 12),
+    'start_date': datetime(2020, 12, 1),
 }
 
 dag = DAG('udac_example_dag',
@@ -24,7 +25,13 @@ start_operator = DummyOperator(task_id='Begin_execution',  dag=dag)
 
 stage_events_to_redshift = StageToRedshiftOperator(
     task_id='Stage_events',
-    dag=dag
+    dag=dag,
+    table="staging_events",
+    redshift_conn_id="redshift",
+    aws_credentials_id="aws_credentials",
+    s3_bucket="udacity-dend",
+    s3_key="log_data",
+    json_path="s3://udacity-dend/log_json_path.json"
 )
 
 stage_songs_to_redshift = StageToRedshiftOperator(

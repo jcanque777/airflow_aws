@@ -10,7 +10,7 @@ from helpers import SqlQueries
 
 default_args = {
     'owner': 'udacity',
-    'start_date': datetime(2020, 12, 1),
+    'start_date': datetime(2020, 12, 7),
     'depends_on_past': False,
     'retries': 1,
     'retry_delay': timedelta(seconds=300),

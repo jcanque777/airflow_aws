@@ -9,6 +9,7 @@ class StageToRedshiftOperator(BaseOperator):
     copy_sql = """
         COPY {}
         FROM '{}'
+        LIMIT 5
         ACCESS_KEY_ID '{}'
         SECRET_ACCESS_KEY '{}'
         COMPUPDATE OFF STATUPDATE OFF
@@ -24,7 +25,7 @@ class StageToRedshiftOperator(BaseOperator):
                 s3_bucket="",
                 s3_key="",
                 region="",
-                file_format="JSON",
+                json_path="auto",
                 *args, **kwargs):
 
         super(StageToRedshiftOperator, self).__init__(*args, **kwargs)
@@ -32,9 +33,8 @@ class StageToRedshiftOperator(BaseOperator):
         self.redshift_conn_id = redshift_conn_id
         self.s3_bucket = s3_bucket
         self.s3_key = s3_key
-        self.region= region
-        self.file_format = file_format
         self.aws_credentials_id = aws_credentials_id
+        self.json_path = json_path
         self.execution_date = kwargs.get('execution_date')
 
     def execute(self, context):

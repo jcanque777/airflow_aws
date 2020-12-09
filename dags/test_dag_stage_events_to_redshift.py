@@ -9,17 +9,17 @@ from helpers import SqlQueries
 # AWS_SECRET = os.environ.get('AWS_SECRET')
 
 default_args = {
-    'owner': 'udacity',
-    'start_date': datetime(2020, 12, 7),
+    'owner': 'johnrick',
+    'start_date': datetime(2020, 12, 8),
     'depends_on_past': False,
-    'retries': 1,
+    'retries': 0, # change back to 3 when working
     'retry_delay': timedelta(seconds=300),
     'catchup': False
 }
 
-dag = DAG('test_stage_events',
+dag = DAG('test_dag_stage_events_to_redshift',
           default_args=default_args,
-          description='Load and transform data in Redshift with Airflow'
+          description='Load and transform data in Redshift with Airflow' #,
         #   schedule_interval='0 * * * *'
         )
 

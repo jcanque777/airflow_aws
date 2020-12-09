@@ -5,7 +5,7 @@ from airflow.operators.postgres_operator import PostgresOperator
 
 efault_args = {
     'owner': 'johnrick',
-    'start_date': datetime(2020, 12, 1),
+    'start_date': datetime(2020, 12, 8),
     'depends_on_past': False,
     'retries': 1,
     'retry_delay': timedelta(seconds=300),

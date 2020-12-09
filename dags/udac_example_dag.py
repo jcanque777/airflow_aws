@@ -12,9 +12,9 @@ from helpers import SqlQueries
 
 default_args = {
     'owner': 'johnrick',
-    'start_date': datetime(2020, 12, 1),
+    'start_date': datetime(2020, 12, 8),
     'depends_on_past': False,
-    'retries': 1,
+    'retries': 0,
     'retry_delay': timedelta(seconds=300),
     'catchup': False
 }

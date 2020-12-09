@@ -3,7 +3,7 @@ import os
 from airflow import DAG
 from airflow.operators.postgres_operator import PostgresOperator
 
-efault_args = {
+default_args = {
     'owner': 'johnrick',
     'start_date': datetime(2020, 12, 8),
     'depends_on_past': False,

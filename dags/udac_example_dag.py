@@ -11,7 +11,7 @@ from helpers import SqlQueries
 # AWS_SECRET = os.environ.get('AWS_SECRET')
 
 default_args = {
-    'owner': 'udacity',
+    'owner': 'johnrick',
     'start_date': datetime(2020, 12, 1),
     'depends_on_past': False,
     'retries': 1,

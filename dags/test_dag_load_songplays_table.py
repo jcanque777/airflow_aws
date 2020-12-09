@@ -30,5 +30,6 @@ load_songplays_table = LoadFactOperator(
     provide_context=True,
     redshift_conn_id="redshift",
     aws_credentials_id="aws_credentials",
+    table="songplays",
     select_query=SqlQueries.songplay_table_insert
 )

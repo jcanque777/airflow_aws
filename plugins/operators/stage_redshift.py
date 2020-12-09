@@ -9,7 +9,6 @@ class StageToRedshiftOperator(BaseOperator):
     copy_sql = """
         COPY {}
         FROM '{}'
-        LIMIT 5
         ACCESS_KEY_ID '{}'
         SECRET_ACCESS_KEY '{}'
         COMPUPDATE OFF STATUPDATE OFF

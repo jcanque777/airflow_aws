@@ -6,6 +6,14 @@ class LoadDimensionOperator(BaseOperator):
 
     ui_color = '#80BD9E'
 
+    truncate_stmt = """
+        TRUNCATE TABLE {table}
+    """
+    insert_into_stmt = """
+        INSERT INTO {table} 
+        {select_query}
+    """
+
     @apply_defaults
     def __init__(self,
                 redshift_conn_id="",

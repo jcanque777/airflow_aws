@@ -20,14 +20,15 @@ default_args = {
 
 dag = DAG('test_dag_load_songplays_table',
           default_args=default_args,
-          description='Load and transform data in Redshift with Airflow'#,
+          description='Load songplays_table'#,
           #schedule_interval='0 * * * *'
         )
 
 load_songplays_table = LoadFactOperator(
     task_id='Load_songplays_fact_table_task',
     dag=dag,
+    provide_context=True,
     redshift_conn_id="redshift",
-    table="songplays",
+    aws_credentials_id="aws_credentials",
     select_query=SqlQueries.songplay_table_insert
 )

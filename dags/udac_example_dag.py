@@ -13,7 +13,7 @@ from helpers import SqlQueries
 
 default_args = {
     'owner': 'johnrick',
-    'start_date': datetime(2020, 12, 9),
+    'start_date': datetime.now(),
     'depends_on_past': False,
     'retries': 0,
     'retry_delay': timedelta(seconds=300),
@@ -23,8 +23,8 @@ default_args = {
 
 dag = DAG('test_full_dag',
           default_args=default_args,
-          description='Load and transform data in Redshift with Airflow'#,
-          max_active_runs=1,
+          description='Load and transform data in Redshift with Airflow',
+          max_active_runs=1
           #schedule_interval='0 * * * *'
         )
 
@@ -38,25 +38,25 @@ table_creation = PostgresOperator(
 )
 
 stage_events_to_redshift = StageToRedshiftOperator(
-    task_id='stage_events_to_redshift_task',
+    task_id='Stage_events',
     dag=dag,
-    table="staging_events",
-    redshift_conn_id="redshift",
+    conn_id="redshift",
     aws_credentials_id="aws_credentials",
-    s3_bucket="udacity-dend",
-    s3_key="log_data",
-    json_path="s3://udacity-dend/log_json_path.json"
+    s3_bucket='udacity-dend',
+    s3_key = "log-data",    
+    table="staging_events",
+    file_format='JSON \'s3://udacity-dend/log_json_path.json\''
 )
 
-stage_song_to_redshift = StageToRedshiftOperator(
-    task_id='stage_song_to_redshift_task',
+stage_songs_to_redshift = StageToRedshiftOperator(
+    task_id='Stage_songs',
     dag=dag,
     table="staging_songs",
-    redshift_conn_id="redshift",
+    conn_id='redshift',
     aws_credentials_id="aws_credentials",
-    s3_bucket="udacity-dend",
-    s3_key="song_data"#,
-    # json_path="s3://udacity-dend/log_json_path.json"
+    s3_bucket='udacity-dend',
+    s3_key = 'song_data/A/A',
+    file_format = 'JSON \'auto\'' 
 )
 
 load_songplays_table = LoadFactOperator(
@@ -119,7 +119,7 @@ load_artist_dimension_table = LoadDimensionOperator(
 end_operator = DummyOperator(task_id='Stop_execution',  dag=dag)
 
 # task dependencies
-start_operator >> table_creation >> [stage_song_to_redshift, stage_events_to_redshift]
-[stage_song_to_redshift, stage_events_to_redshift] >> load_songplays_table
+start_operator >> table_creation >> [stage_songs_to_redshift, stage_events_to_redshift]
+[stage_songs_to_redshift, stage_events_to_redshift] >> load_songplays_table
 
 load_songplays_table >> [load_user_dimension_table, load_song_dimension_table, load_artist_dimension_table] >> end_operator

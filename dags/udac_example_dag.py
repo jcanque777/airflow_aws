@@ -8,9 +8,6 @@ from airflow.operators import (StageToRedshiftOperator, LoadFactOperator,
                                 LoadDimensionOperator, DataQualityOperator)
 from helpers import SqlQueries
 
-# AWS_KEY = os.environ.get('AWS_KEY')
-# AWS_SECRET = os.environ.get('AWS_SECRET')
-
 default_args = {
     'owner': 'johnrick',
     'start_date': datetime.now(),
@@ -19,7 +16,6 @@ default_args = {
     'retry_delay': timedelta(seconds=300),
     'catchup': False
 }
-
 
 dag = DAG('test_full_dag',
           default_args=default_args,

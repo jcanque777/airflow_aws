@@ -24,6 +24,7 @@ default_args = {
 dag = DAG('test_full_dag',
           default_args=default_args,
           description='Load and transform data in Redshift with Airflow'#,
+          max_active_runs=1,
           #schedule_interval='0 * * * *'
         )
 

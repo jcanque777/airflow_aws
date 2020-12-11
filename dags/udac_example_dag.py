@@ -12,7 +12,7 @@ default_args = {
     'owner': 'johnrick',
     'start_date': datetime(2020, 12, 9),
     'depends_on_past': False,
-    'retries': 3
+    'retries': 3,
     'retry_delay': timedelta(seconds=300),
     'catchup': False
 }
